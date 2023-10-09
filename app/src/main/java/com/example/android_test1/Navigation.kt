@@ -23,33 +23,39 @@ import androidx.navigation.NavController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.compose.navArgument
+//import androidx.navigation.compose.navArgument
 import androidx.navigation.compose.rememberNavController
+import com.example.android_test1.destinations.DetailScreenDestination
+import com.ramcosta.composedestinations.annotation.Destination
+import com.ramcosta.composedestinations.annotation.RootNavGraph
+import com.ramcosta.composedestinations.navigation.DestinationsNavigator
 
-@Composable
-fun Navigation(){
-    val navController= rememberNavController()
-    NavHost(navController = navController, startDestination = Screen.MainScreen.route){
-        composable(route= Screen.MainScreen.route){
-            MainScreen(navController = navController)
-        }
-        composable(
-            route= Screen.DetailScreen.route+ "/{name}",
-            arguments = listOf(
-                navArgument("name"){
-                    type= NavType.StringType
-                    defaultValue= "Name"
-                    nullable= true
-                }
-            )
-        ){ entry->
-            DetailScreen(name = entry.arguments?.getString("name"))
-        }
-    }
-}
+//@Composable
+//fun Navigation(){
+//    val navController= rememberNavController()
+//    NavHost(navController = navController, startDestination = Screen.MainScreen.route){
+//        composable(route= Screen.MainScreen.route){
+//            MainScreen(navController = navController)
+//        }
+//        composable(
+//            route= Screen.DetailScreen.route+ "/{name}",
+//            arguments = listOf(
+//                navArgument("name"){
+//                    type= NavType.StringType
+//                    defaultValue= "Name"
+//                    nullable= true
+//                }
+//            )
+//        ){ entry->
+//            DetailScreen(name = entry.arguments?.getString("name"))
+//        }
+//    }
+//}
 
+@Destination
+@RootNavGraph(start = true)
 @Composable
-fun MainScreen(navController: NavController){
+fun MainScreen(navigator: DestinationsNavigator){
     var text by remember{ mutableStateOf("") }
     Column(
         verticalArrangement= Arrangement.Center,
@@ -62,8 +68,8 @@ fun MainScreen(navController: NavController){
         }, modifier= Modifier.fillMaxWidth())
         Spacer(modifier = Modifier.height(8.dp))
         Button(
-            onClick = {
-                      navController.navigate(Screen.DetailScreen.withArgs(text))
+            onClick = { navigator.navigate(DetailScreenDestination(text))
+
         },
             modifier= Modifier.align(Alignment.End)) {
             Text(text= "To Detail Screen")
@@ -71,6 +77,8 @@ fun MainScreen(navController: NavController){
     }
 }
 
+
+@Destination
 @Composable
 fun DetailScreen(name: String?) {
 Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()){

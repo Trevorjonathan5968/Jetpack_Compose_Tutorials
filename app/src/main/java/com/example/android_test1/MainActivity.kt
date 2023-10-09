@@ -74,6 +74,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.android_test1.ui.theme.Android_test1Theme
+import com.ramcosta.composedestinations.DestinationsNavHost
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 import androidx.compose.ui.graphics.Color as Color
@@ -88,12 +89,13 @@ class MainActivity : ComponentActivity() {
 //        )
 
         setContent {
-            Navigation()
-            }
+            DestinationsNavHost(navGraph = NavGraphs.root)
 
             }
 
-            }
+    }
+
+}
 
 
 

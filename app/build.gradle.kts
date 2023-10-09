@@ -1,11 +1,12 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("com.google.devtools.ksp")//to help with the ksp declaration at dependencies
 }
 
 android {
     namespace = "com.example.android_test1"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.android_test1"
@@ -37,7 +38,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.3"
     }
     packaging {
         resources {
@@ -65,4 +66,6 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     implementation ("androidx.navigation:navigation-compose:2.4.0-alpha04")
+    implementation("io.github.raamcosta.compose-destinations:core:1.9.54")// dependent on compose version but can auto update by gradle
+    ksp("io.github.raamcosta.compose-destinations:ksp:1.9.54") //also dependsn on JC version
 }
